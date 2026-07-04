@@ -18,14 +18,20 @@ public class RealSneakingEventHelper {
     private static void preClientTick(Minecraft minecraftClient) {
         if (minecraftClient.player != null) {
             LivingEntityCompat entityCompat = CompatGetUtil.getLivingEntityCompat(minecraftClient.player);
-            if (EntityCompat.of(minecraftClient.player).getMaxUpStep() - MIN_STEP_HEIGHT >= 0.00001) {
-                prevStepHeight = entityCompat.getMaxUpStep();
+            float currentStepHeight = EntityCompat.of(minecraftClient.player).getMaxUpStep();
+
+            if (Math.abs(currentStepHeight - MIN_STEP_HEIGHT) >= 0.00001) {
+                prevStepHeight = currentStepHeight;
             }
 
             if (Configs.realSneaking.getBooleanValue() && minecraftClient.player.isShiftKeyDown()) {
-                 entityCompat.setMaxUpStep(MIN_STEP_HEIGHT);
+                if (Math.abs(currentStepHeight - MIN_STEP_HEIGHT) >= 0.00001) {
+                    entityCompat.setMaxUpStep(MIN_STEP_HEIGHT);
+                }
             } else {
-                 entityCompat.setMaxUpStep(prevStepHeight);
+                if (Math.abs(currentStepHeight - prevStepHeight) >= 0.00001) {
+                    entityCompat.setMaxUpStep(prevStepHeight);
+                }
             }
         }
     }

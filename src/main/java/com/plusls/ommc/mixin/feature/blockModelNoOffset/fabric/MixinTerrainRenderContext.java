@@ -4,24 +4,24 @@ import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.plusls.ommc.impl.feature.blockModelNoOffset.BlockModelNoOffsetHelper;
-import net.fabricmc.fabric.impl.client.indigo.renderer.render.TerrainRenderContext;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @SuppressWarnings("UnstableApiUsage")
-@Mixin(value = TerrainRenderContext.class, remap = false)
+@Mixin(targets = "net.fabricmc.fabric.impl.client.indigo.renderer.render.TerrainRenderContext", remap = false)
 public abstract class MixinTerrainRenderContext {
 
     @WrapWithCondition(
             method = {
-                    "bufferModel", // 1.21.5+
                     "tessellateBlock", // For fabric-renderer-indigo 0.5.0 and above
-                    "tesselateBlock" // For fabric-renderer-indigo 0.5.0 below
+                    "tesselateBlock", // For fabric-renderer-indigo 0.5.0 below
+                    "bufferModel" // 1.21.5+
             },
             at = @At(
                     value = "INVOKE",
-                    target = "Lcom/mojang/blaze3d/vertex/PoseStack;translate(DDD)V"
+                    target = "Lnet/minecraft/class_4587;method_22904(DDD)V",
+                    remap = false
             )
     )
     private static boolean blockModelNoOffsetCondition(

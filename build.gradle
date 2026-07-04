@@ -1,5 +1,14 @@
 import com.replaymod.gradle.preprocess.Node
 
+buildscript {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath("com.github.Fallen-Breath:remap:f1c1480696")
+    }
+}
+
 plugins {
     id("net.fabricmc.fabric-loom-remap").version("${loom_version}").apply(false)
     id("net.fabricmc.fabric-loom").version("${loom_version}").apply(false)

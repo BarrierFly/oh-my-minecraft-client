@@ -23,7 +23,9 @@ preprocess {
 }
 
 JavaVersion javaCompatibility
-if (mcVersion >= 12005) {
+if (mcVersion >= 260100) {
+    javaCompatibility = JavaVersion.VERSION_25
+} else if (mcVersion >= 12005) {
     javaCompatibility = JavaVersion.VERSION_21
 } else if (mcVersion >= 11800) {
     javaCompatibility = JavaVersion.VERSION_17
@@ -37,8 +39,8 @@ repositories {
     mavenLocal()
 
     maven {
-        name("NeoForge")
-        url("https://maven.neoforged.net/releases/")
+        name("Nyan Maven")
+        url("https://maven.hendrixshen.moe/releases")
     }
 
     maven {
@@ -57,11 +59,14 @@ repositories {
     }
 
     maven {
-        name("Nyan Maven")
-        url("https://maven.hendrixshen.top/releases")
+        name("NeoForge")
+        url("https://maven.neoforged.net/releases/")
     }
 
-    mavenCentral()
+    maven {
+        name("Maven Central")
+        url("https://repo1.maven.org/maven2")
+    }
 }
 
 dependencies {

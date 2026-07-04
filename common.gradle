@@ -31,8 +31,8 @@ repositories {
     mavenLocal()
 
     maven {
-        name("NeoForge")
-        url("https://maven.neoforged.net/releases/")
+        name("Nyan Maven")
+        url("https://maven.hendrixshen.moe/releases")
     }
 
     maven {
@@ -51,11 +51,14 @@ repositories {
     }
 
     maven {
-        name("Nyan Maven")
-        url("https://maven.hendrixshen.top/releases")
+        name("NeoForge")
+        url("https://maven.neoforged.net/releases/")
     }
 
-    mavenCentral()
+    maven {
+        name("Maven Central")
+        url("https://repo1.maven.org/maven2")
+    }
 }
 
 dependencies {
@@ -79,6 +82,12 @@ dependencies {
     //        neoForge("net.neoforged:neoforge:${project.property("dependencies.neoforge_version")}")
     //        break
     //}
+}
+
+// HACK: Override getMappingConfiguration to prevent UnsupportedOperationException
+// in non-obfuscated MC (26.x). The preprocessor needs this but loom refuses.
+if (mcVersion >= 260100) {
+    loom.metaClass.getMappingConfiguration = { -> null }
 }
 
 loom {

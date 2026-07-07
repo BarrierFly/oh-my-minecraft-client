@@ -34,7 +34,7 @@ public class Configs {
 
     // Generic
     @Config(category = ConfigCategory.GENERIC)
-    public static MagicConfigHotkey clearWaypoint = Configs.cf.newConfigHotkey("clearWaypoint", "C");
+    public static MagicConfigHotkey clearWaypoint = Configs.cf.newConfigHotkey("clearWaypoint", "");
 
     @Config(category = ConfigCategory.GENERIC)
     public static MagicConfigBoolean debug = Configs.cf.newConfigBoolean("debug", false);

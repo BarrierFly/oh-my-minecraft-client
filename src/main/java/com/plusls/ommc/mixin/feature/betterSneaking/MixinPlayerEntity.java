@@ -65,10 +65,14 @@ public abstract class MixinPlayerEntity {
             //#endif
             Operation<Float> original
     ) {
+        if (!Configs.betterSneaking.getBooleanValue()) {
+            return original.call(instance);
+        }
+
         EntityCompat entityCompat = EntityCompat.of(instance);
         this.ommc$original_step_height = original.call(instance);
 
-        if (!Configs.betterSneaking.getBooleanValue() || !entityCompat.getLevel().isClientSide()) {
+        if (!entityCompat.getLevel().isClientSide()) {
             return this.ommc$original_step_height;
         }
 
@@ -105,6 +109,21 @@ public abstract class MixinPlayerEntity {
             //#endif
             Operation<Boolean> original
     ) {
+        if (!Configs.betterSneaking.getBooleanValue()) {
+            return original.call(
+                    //#if MC > 12004
+                    entity,
+                    d,
+                    e,
+                    f
+                    //#else
+                    //$$ level,
+                    //$$ entity,
+                    //$$ aabb
+                    //#endif
+            );
+        }
+
         EntityCompat entityCompat = EntityCompat.of(entity);
 
         //#if MC > 12004
@@ -125,7 +144,7 @@ public abstract class MixinPlayerEntity {
                 //#endif
         );
 
-        if (!Configs.betterSneaking.getBooleanValue() || !level.isClientSide()) {
+        if (!level.isClientSide()) {
             return result;
         }
 
